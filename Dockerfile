@@ -2,6 +2,8 @@ FROM node:18-alpine
 
 WORKDIR /app/medusa
 
+ENV NODE_OPTIONS="--max-old-space-size=8192"
+
 COPY . .
 
 RUN apk add --no-cache python3 py3-pip
