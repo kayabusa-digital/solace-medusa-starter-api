@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app/medusa
 
@@ -12,4 +12,4 @@ RUN npm install
 
 RUN npm run build
 
-CMD yarn db:migrate && npm run start
+CMD npm run db:migrate && npm run start
