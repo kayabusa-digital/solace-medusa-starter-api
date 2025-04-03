@@ -1,15 +1,20 @@
-FROM node:20-alpine
+FROM node:latest as builder
 
 WORKDIR /app/medusa
 
-ENV NODE_OPTIONS="--max-old-space-size=8192"
-
 COPY . .
 
-RUN apk add --no-cache python3 py3-pip
+RUN apt-get update && apt-get install -y python3 python3-pip python-is-python3
 
-RUN npm install
+RUN yarn
 
-RUN npm run build
+RUN yarn build
 
-CMD npm run start
+FROM node:latest as production
+
+WORKDIR /app/medusa
+
+COPY --from=builder /app/medusa/.medusa/server .
+COPY --from=builder /app/medusa/node_modules ./node_modules
+
+CMD yarn db:migrate && yarn start
