@@ -76,6 +76,7 @@ module.exports = defineConfig({
   },
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
+    redisUrl: process.env.REDIS_URL,
     // databaseDriverOptions: { connection: { ssl: { rejectUnauthorized: false } } },
     http: {
       storeCors: process.env.STORE_CORS,
