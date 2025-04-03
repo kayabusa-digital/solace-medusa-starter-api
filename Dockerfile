@@ -12,4 +12,11 @@ COPY . .
 
 RUN yarn build
 
+FROM node:20-alpine as production
+
+WORKDIR /app/medusa
+
+COPY --from=builder /app/medusa/.medusa/server .
+COPY --from=builder /app/medusa/node_modules ./node_modules
+
 CMD yarn start
